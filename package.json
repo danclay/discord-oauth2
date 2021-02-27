@@ -4,7 +4,8 @@
   "description": "Easily interact with discord's oauth2 API",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --ext .js ./ --no-error-on-unmatched-pattern && echo \"\u001b[1m\u001b[32mOK - lint\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK - lint\u001b[39m\u001b[22m\""
+    "lint": "eslint --ext .js ./ --no-error-on-unmatched-pattern && echo \"\u001b[1m\u001b[32mOK - lint\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK - lint\u001b[39m\u001b[22m\"",
+    "dev": "node ./test.js"
   },
   "directories": {
     "lib": "lib"
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/reboxer/discord-oauth2#readme",
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "eslint": "^7.13.0"
   }
 }
