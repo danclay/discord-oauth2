@@ -85,6 +85,89 @@ interface PartialGuild {
 	permissions_new?: string;
 }
 
+interface Guild {
+	id: string;
+	name: string;
+	icon: string | null | undefined;
+	splash?: string | null;
+	discovery_splash: string | null;
+	owner_id: string;
+	region: string;
+	afk_channel_id: string | null;
+	afk_timeout: number;
+	widget_enabled: boolean;
+	widget_channel_id?: string | null;
+	verification_level: number;
+	default_message_notifications: number;
+	explicit_content_filter: number;
+	roles: Role[];
+	emojis: Emoji[];
+	features: string[];
+	mfa_level: number;
+	application_id: string | null;
+	system_channel_id: string | null;
+	system_channel_flags: number;
+	rules_channel_id: string | null;
+	max_presences?: number | null;
+	max_members?: number;
+	vanity_url_code: string | null;
+	description: string | null;
+	banner: string | null;
+	premium_tier: number;
+	premium_subscription_count?: number;
+	preferred_locale: string;
+	public_updates_channel_id: string | null;
+	max_video_channel_users?: number;
+	approximate_member_count?: number;
+	approximate_presence_count?: number;
+	welcome_screen?: {
+		description: string | null;
+		welcome_channels: {
+			channel_id: string;
+			description: string;
+			emoji_id: string | null;
+			emoji_name: string | null;
+		}[]
+	}
+}
+
+interface Emoji {
+	id: string | null;
+	name: string | null;
+	roles?: string[];
+	user?: User;
+	require_colons?: boolean;
+	managed?: boolean;
+	animated?: boolean;
+	available?: boolean;
+}
+
+interface RoleTags {
+	bot_id?: string;
+	integration_id?: string;
+	premium_subscriber?: null;
+}
+
+interface Role {
+	id: string;
+	name: string;
+	color: number;
+	hoist: boolean;
+	position: number;
+	permissions: string;
+	managed: boolean;
+	mentionable: boolean;
+	tags?: RoleTags[];
+}
+
+interface RoleInput {
+	name?: string;
+	permissions?: string;
+	color?: number;
+	hoist?: boolean;
+	mentionable?: boolean;
+}
+
 declare class OAuth extends EventEmitter {
 	constructor(opts?: {
 		version?: string,
@@ -110,6 +193,18 @@ declare class OAuth extends EventEmitter {
 	getUser(access_token: string): Promise<User>;
 	getUserGuilds(access_token: string): Promise<PartialGuild[]>;
 	getUserConnections(access_token: string): Promise<Connection[]>;
+	getBotGuilds(botToken: string): Promise<PartialGuild[]>;
+	getGuild(botToken: string, guildId: string): Promise<Guild>;
+	createGuildRole(botToken: string, guildId: string, opts: RoleInput): Promise<Role>;
+	modifyGuildRole(botToken: string, guildId: string, roleId: string, opts: RoleInput): Promise<Role>;
+	deleteGuildRole(botToken: string, guildId: string, roleId: string): Promise<>;
+	getGuildMember(botToken: string, guildId: string, memberId: string): Promise<Member>;
+	modifyGuildMember(botToken: string, guildId: string, memberId: string, opts: {
+		deaf?: boolean,
+		mute?: boolean,
+		nickname?: string,
+		roles?: string[],
+	}): Promise<Member>;
 	addMember(opts: {
 		deaf?: boolean,
 		mute?: boolean,
