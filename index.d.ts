@@ -16,12 +16,14 @@ interface User {
 
 interface Member {
 	user?: User;
-	nick: string | null | undefined;
+	nick?: string | null;
 	roles: string[];
 	joined_at: number;
 	premium_since?: number | null | undefined;
 	deaf: boolean;
 	mute: boolean;
+	pending?: boolean;
+	permissions?: string;
 }
 
 // This is not accurate as discord sends a partial object
@@ -80,7 +82,7 @@ interface PartialGuild {
 	name: string;
 	icon: string | null | undefined;
 	owner?: boolean;
-	permissions?: number;
+	permissions?: string;
 	features: string[];
 	permissions_new?: string;
 }
@@ -193,11 +195,15 @@ declare class OAuth extends EventEmitter {
 	getUser(access_token: string): Promise<User>;
 	getUserGuilds(access_token: string): Promise<PartialGuild[]>;
 	getUserConnections(access_token: string): Promise<Connection[]>;
-	getBotGuilds(botToken: string): Promise<PartialGuild[]>;
+	getBotGuilds(botToken: string, opts?: {
+		before?: string;
+		after?: string;
+		limit?: string;
+	}): Promise<PartialGuild[]>;
 	getGuild(botToken: string, guildId: string): Promise<Guild>;
 	createGuildRole(botToken: string, guildId: string, opts: RoleInput): Promise<Role>;
 	modifyGuildRole(botToken: string, guildId: string, roleId: string, opts: RoleInput): Promise<Role>;
-	deleteGuildRole(botToken: string, guildId: string, roleId: string): Promise<>;
+	deleteGuildRole(botToken: string, guildId: string, roleId: string): Promise<void>;
 	getGuildMember(botToken: string, guildId: string, memberId: string): Promise<Member>;
 	modifyGuildMember(botToken: string, guildId: string, memberId: string, opts: {
 		deaf?: boolean,
@@ -228,4 +234,5 @@ declare class OAuth extends EventEmitter {
 	}): string;
 }
 
-export = OAuth;
+export default OAuth
+export {User, Member, Integration, Connection, Application, TokenRequestResult, PartialGuild, Guild, Emoji, RoleTags, Role, RoleInput}
