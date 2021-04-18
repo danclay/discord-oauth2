@@ -184,7 +184,6 @@ declare class OAuth extends EventEmitter {
 	on(event: "debug" | "warn", listener: (message: string) => void): this;
 	tokenRequest(opts: {
 		code?: string,
-		scope: string[] | string,
 		clientId?: string,
 		grantType: "authorization_code" | "refresh_token",
 		redirectUri?: string,
