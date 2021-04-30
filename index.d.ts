@@ -181,7 +181,7 @@ declare class OAuth extends EventEmitter {
 		latencyThreshold?: number,
 		ratelimiterOffset?: number,
 	});
-	request(method: string, path: string, data: any, headers: {auth?: {type: "Bearer" | "Bot", creds: string}}, contentType?: string): Promise<any>;
+	request(method: string, path: string, data: any, headers: {auth?: {type: "Bearer" | "Bot", creds: string}, contentType?: string}): Promise<any>;
 	on(event: "debug" | "warn", listener: (message: string) => void): this;
 	tokenRequest(opts: {
 		code?: string,
